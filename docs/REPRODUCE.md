@@ -1,12 +1,7 @@
-# Reproducing on your own Kindle / Воспроизведение на своём Kindle
+# Reproducing on your own Kindle
 
-[English](#english) · [Русский](#русский)
 
----
-
-## English
-
-> **Disclaimer.** Educational and research documentation of the author's personal experiments on his own device.
+> **Disclaimer.** Educational and research documentation of the author's personal experiments on their own device.
 > This is not an encouragement or an instruction to modify devices. Modifying a Kindle may violate Amazon's terms of
 > use, voids the warranty and can brick the device. No support is provided. You act entirely at your own risk. The
 > project does not circumvent DRM or access protected content and must not be used to do so. Respect Amazon's
@@ -92,7 +87,7 @@ status bar (rows 0–90), compare pixel by pixel. Keep these screenshots private
 
 ### 8. Roll back
 
-- Instantly, without a computer: KUAL → "Безопасный режим" → accelerator off (install `safemode/extension` as a KUAL
+- Instantly, without a computer: KUAL → "Safe mode" → accelerator off (install `safemode/extension` as a KUAL
   extension first).
 - Over USB: create an empty file `DISABLE_KPPFAST` in the root of the Kindle drive and restart.
 - Completely: `ssh kindle 'sh /var/local/kppfast/rollback.sh --restart'` (stock upstart job back, directory removed).
@@ -101,47 +96,3 @@ status bar (rows 0–90), compare pixel by pixel. Keep these screenshots private
 
 The shipped speed-up does not patch Java or Hermes bytecode. `tools/hbc.py` is a research tool for Hermes bytecode
 v84 that edits a copy you extract from your own device; never publish original or patched bundles.
-
----
-
-## Русский
-
-> **Отказ от ответственности.** Образовательная и исследовательская документация личных экспериментов автора на
-> его собственном устройстве. Это не призыв и не инструкция изменять устройства. Изменение Kindle может нарушать
-> условия использования Amazon, лишает гарантии и может превратить устройство в «кирпич». Поддержки нет. Вы
-> действуете целиком на свой риск. Проект не обходит DRM, не даёт доступа к защищённому контенту и не должен для
-> этого использоваться. Уважайте авторские права и товарные знаки Amazon. Проект не связан с Amazon и не одобрен ею.
-
-### Ответственное использование
-
-- Только на своём устройстве. Только Kindle Oasis 3 на прошивке 5.18.2: на другом проверки откажут или ничего не проверено.
-- Не распространяйте файлы Amazon: ни библиотеки с устройства для линковки, ни сгенерированный `hot_bytes.h`, ни
-  дампы символов, ни снимки экрана со своими книгами. `.gitignore` их исключает, сохраните это в форках.
-- Не используйте ничего отсюда, чтобы добраться до содержимого книг или снять защиту. Здесь этого нет.
-- До начала подготовьте путь назад (kill switch, безопасный режим KUAL, `rollback.sh`) и включайте по одному переключателю.
-
-### Порядок
-
-0. **Условия.** Kindle Oasis 3, прошивка 5.18.2, **уже взломанный вами самостоятельно**, с root-доступом (SSH или
-   USB-сеть) и KUAL. Инструменты джейлбрейка проект не даёт и на них не ссылается. Нужны Docker и Python 3.
-1. **Свои файлы с устройства** (приватно, не коммитить): `libc.so.6`, `libpthread.so.0`, `libdl.so.2` из `/lib` в
-   `~/kindle-private/klibs`; для `libkpphot` ещё патчимые бинарники (список в `tools/genbytes.py`) в `~/kindle-private/syms`.
-2. **Проверка прошивки только по хэшам:** `python3 -I tools/genbytes.py --hash ~/kindle-private/syms` и сравнение с
-   `docs/EXPECTED-HASHES.txt`. Любое отличие означает стоп.
-3. **Сборка:** `python3 -I tools/genbytes.py ~/kindle-private/syms ~/kindle-private/hot_bytes.h`, затем
-   `KLIBS=~/kindle-private/klibs HOTBYTES=~/kindle-private/hot_bytes.h ./build.sh test`. Без `HOTBYTES` собирается
-   всё, кроме `libkpphot.so`. Библиотеки линкуются с glibc 2.20 вашего устройства (проверка: `readelf -V`).
-4. **Установка лаунчера с первыми библиотеками:** `LIBS="libkppfs.so libkppx11.so" sh scripts/make-payload.sh`,
-   скопировать `out/payload` на Kindle, `sh install.sh` от root, потом `sh /var/local/kppfast/check.sh`.
-5. **Включать по одному:** `kppfast-ctl.sh set KEY=1` и `kppfast-ctl.sh restart`. Порядок: fs + x11 → malloc + img →
-   hot (каждый `KPPHOT_*` отдельно) → side → db → log → cc → grip. Полная итоговая конфигурация в `bench/device-baseline.sh`.
-6. **Замер A/B:** `bench/ab-run.sh` с чередованием B N B N, `bench/compare.py`. Выигрыш засчитывается, только если
-   повторился в обоих кругах.
-7. **Проверка экранов:** снимки одних и тех же страниц с кандидатом и без, строка состояния замаскирована,
-   сравнение попиксельно. Снимки не публиковать: на них ваша библиотека.
-8. **Откат:** KUAL → «Безопасный режим» → выключить ускоритель; или пустой файл `DISABLE_KPPFAST` в корне диска
-   Kindle по USB; или полностью `sh /var/local/kppfast/rollback.sh --restart`.
-
-Java и Hermes: итоговое ускорение байт-код не патчит. `tools/hbc.py` это исследовательский инструмент для Hermes
-bytecode v84, работающий с копией, извлечённой с вашего собственного устройства; оригинальные или изменённые бандлы
-не публиковать.

@@ -56,7 +56,7 @@
 <text x="36" y="606" font-size="13"  fill="#1b1f24">touch /mnt/us/DISABLE_KPPFAST</text>
 <text x="36" y="624" font-size="13"  fill="#1b1f24">(over USB): next start is stock</text>
 <rect x="370" y="566" width="300" height="110" rx="8" fill="#fff0f0" stroke="#cf6f6f" stroke-width="1.5"/>
-<text x="382" y="588" font-size="14" font-weight="700" fill="#1b1f24">KUAL → Безопасный режим</text>
+<text x="382" y="588" font-size="14" font-weight="700" fill="#1b1f24">KUAL → Safe mode</text>
 <text x="382" y="606" font-size="13"  fill="#1b1f24">reboot · accelerator off/on ·</text>
 <text x="382" y="624" font-size="13"  fill="#1b1f24">everything off — no computer needed</text>
 <rect x="716" y="566" width="300" height="110" rx="8" fill="#fff0f0" stroke="#cf6f6f" stroke-width="1.5"/>

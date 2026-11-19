@@ -1,97 +1,97 @@
-# Kindle Oasis 3: ускорение интерфейса (kppfast)
+# Kindle Oasis 3 UI speed-up (kppfast)
 
-[English version](README.en.md) · [Как воспроизвести](docs/REPRODUCE.md) · [Результаты](docs/RESULTS.md) · [Методика](docs/METHODOLOGY.md)
+[Reproduce](docs/REPRODUCE.md) · [Results](docs/RESULTS.md) · [Methodology](docs/METHODOLOGY.md)
 
-> **Отказ от ответственности.** Это образовательная и исследовательская документация личных экспериментов автора
-> на его собственном устройстве. Это не призыв и не инструкция изменять устройства. Изменение Kindle может нарушать
-> условия использования Amazon, лишает гарантии и может необратимо вывести устройство из строя («кирпич»). Поддержки
-> нет. Всё, что вы делаете, вы делаете на свой страх и риск. Проект не обходит DRM, не даёт доступа к защищённому
-> контенту и не должен для этого использоваться. Уважайте авторские права и товарные знаки Amazon. Проект не связан
-> с Amazon и не одобрен ею. Названия Amazon и Kindle используются только описательно.
+> **Disclaimer.** This is educational and research documentation of the author's personal experiments on their own
+> device. It is not an encouragement or an instruction to modify devices. Modifying a Kindle may violate Amazon's
+> terms of use, voids the warranty and can brick the device. There is no support. Use it entirely at your own risk.
+> The project does not circumvent DRM or access protected content and must not be used to do so. Respect Amazon's
+> copyrights and trademarks. Not affiliated with or endorsed by Amazon. Amazon and Kindle names are used only
+> descriptively.
 
-Библиотека Kindle Oasis 3 (прошивка 5.18.2) листается медленно: около 0,7 с на страницу. Этот репозиторий содержит
-собственный код автора, который ускоряет штатное приложение Amazon `KPPMainApp`, не заменяя ни одного файла Amazon:
-набор маленьких библиотек `libkpp*.so`, загружаемых через `LD_PRELOAD`, лаунчер с защитой от сбоев, стенд для
-замеров и KUAL-расширение «Безопасный режим».
+The Library of a Kindle Oasis 3 (firmware 5.18.2) turns pages slowly, about 0.7 s per page. This repository holds
+the author's own code that speeds up Amazon's stock `KPPMainApp` without replacing a single Amazon file: small
+`libkpp*.so` libraries loaded with `LD_PRELOAD`, a fail-safe launcher, a benchmark harness and a KUAL "Safe mode"
+extension.
 
-![Время листания библиотеки](docs/img/page-turn-timeline.svg)
+![Library page turn timeline](docs/img/page-turn-timeline.svg)
 
-## Результат (одно устройство, медианы)
+## Results (one device, medians)
 
 | | Amazon | kppfast |
 |---|---|---|
-| Листание библиотеки, повторный визит страницы | 0,59–0,74 с | **≈0,25 с** |
-| Листание библиотеки, первый визит страницы | 0,65–0,74 с | **≈0,42 с** |
-| CPU главного потока на листание | 341 мс | 210 мс (≈65 мс на повторном визите) |
-| Перелистывание при выделении текста через страницу | ≈1,25 с, потом зависание | ≈0,94–1,0 с, без зависания |
+| Library page turn, revisit | 0.59–0.74 s | **≈0.25 s** |
+| Library page turn, first visit | 0.65–0.74 s | **≈0.42 s** |
+| Main-thread CPU per turn | 341 ms | 210 ms (≈65 ms on a revisit) |
+| Page turn while selecting text across pages | ≈1.25 s, then hangs | ≈0.94–1.0 s, no hang |
 
-Экраны совпадают со штатными попиксельно (кроме известного случая с кэшем обложек, см. [RESULTS](docs/RESULTS.md)).
+Screens are pixel-identical to stock (with one documented cover-cache case, see [RESULTS](docs/RESULTS.md)).
 
-## Как это устроено
+## How it works
 
-![Архитектура](docs/img/architecture.svg)
+![Architecture](docs/img/architecture.svg)
 
-- **LD_PRELOAD.** В upstart-задание `kppmainapp` добавляется одна строка: если нет `/mnt/us/DISABLE_KPPFAST`,
-  запускается `launch.sh`, который проверяет библиотеки по `SHA256SUMS` и делает `exec /app/bin/KPPMainApp` с
-  `LD_PRELOAD`. Бинарники Amazon, `/opt/amazon`, `cc.db` не трогаются.
-- **Перехват функций.** `libkppfs` кэширует `stat`/`open` и отрицательные поиски файлов, `libkppx11` переводит
-  передачу картинок в X11 на разделяемую память, `libkppmalloc` даёт glibc 2.20 потоковые списки свободных блоков,
-  `libkppimg` заменяет медленный цикл gray→RGB на NEON, `libkppside` и `libkppdb` убирают лишнюю работу JS-потока,
-  `libkpplog` одним выключателем глушит лишние логи.
-- **Патчи в памяти с проверкой байтов.** `libkpphot` и `libkppcc` меняют несколько инструкций в загруженном коде
-  только после точного сравнения размера файла и байтов каждого места с ожидаемыми. Ожидаемые байты **не
-  поставляются**: вы генерируете их из своего устройства (`tools/genbytes.py`) или проверяете по хэшу.
-  Любое расхождение означает, что патч пропускается и работает оригинал.
-- **Кэши Amazon перестают голодать.** Самый большой выигрыш дал не новый код, а штатные кэши: кэш обложек
-  ограничен на этом устройстве 2 МБ (≈6 страниц), кэш готовых элементов сетки 1 МБ (2–3 страницы). `libkppcc`
-  поднимает оба лимита до 16 МБ (значение, которое прошивка сама использует на устройствах с большей памятью) и
-  сохраняет готовые файлы кэша на флеш, чтобы они переживали перезагрузку.
-- **Выделение текста.** Драйвер тачскрина гасит отпускание пальца у правого и нижнего края (≈40 пикселей),
-  поэтому выделение через страницу зависало. `libkppgrip` выключает это подавление только на время жеста,
-  `KPPHOT_RSEL_EDGE=700` сокращает задержку у края с 1000 до 700 мс. Подробно: [картинка](docs/img/cross-page-selection.svg).
+- **LD_PRELOAD.** One line is added to the `kppmainapp` upstart job: unless `/mnt/us/DISABLE_KPPFAST` exists it runs
+  `launch.sh`, which verifies every library against `SHA256SUMS` and `exec`s `/app/bin/KPPMainApp` with `LD_PRELOAD`.
+  Amazon binaries, `/opt/amazon` and `cc.db` are not touched.
+- **Interposed functions.** `libkppfs` caches `stat`/`open` and negative lookups, `libkppx11` moves image transfers
+  to X11 shared memory, `libkppmalloc` gives glibc 2.20 per-thread free lists, `libkppimg` replaces a slow gray→RGB
+  loop with NEON, `libkppside` and `libkppdb` remove needless JS-thread work, `libkpplog` silences log spam with
+  one switch.
+- **Byte-verified in-memory patches.** `libkpphot` and `libkppcc` change a few instructions in the loaded code only
+  after the file size and the exact bytes of every site match. The expected bytes are **not shipped**: you generate
+  them from your own device (`tools/genbytes.py`) or check by hash. Any mismatch skips the patch and the original runs.
+- **Amazon's own caches un-starved.** The biggest gain came from stock caches, not new code: on this device the
+  cover-tile cache is capped at 2 MB (≈6 pages) and the whole-item cache at 1 MB (2–3 pages). `libkppcc` raises both
+  to 16 MB (a value the firmware itself uses on devices with more RAM) and mirrors finished cache files to flash so
+  they survive reboots.
+- **Text selection.** The touch driver's grip suppression swallows a finger lift near the right and bottom edges
+  (≈40 px), so selecting across a page hung. `libkppgrip` switches suppression off for the duration of the gesture
+  only; `KPPHOT_RSEL_EDGE=700` shortens the edge hold from 1000 to 700 ms. See the
+  [diagram](docs/img/cross-page-selection.svg).
 
-![Куда уходит время](docs/img/where-time-goes.svg)
+![Where the time goes](docs/img/where-time-goes.svg)
 
-## Безопасность
+## Safety
 
-- Каждый патч под своим переключателем `KPP*=1`, по умолчанию выключен.
-- `launch.sh` запускает штатное приложение, если: есть `/mnt/us/DISABLE_KPPFAST`, было 2 неудачных старта подряд,
-  4 старта за 30 минут, библиотека не совпала с `SHA256SUMS`. Зависание (нет ответа LIPC 180 с) тоже считается сбоем.
-- Без компьютера: KUAL → «Безопасный режим» (перезагрузка, ускоритель выкл/вкл, всё выкл).
-- Полный откат: `sh /var/local/kppfast/rollback.sh --restart` возвращает штатное задание upstart и удаляет
+- Every patch has its own `KPP*=1` switch, default off.
+- `launch.sh` starts stock if: `/mnt/us/DISABLE_KPPFAST` exists, 2 failed starts, 4 starts within 30 min, a library
+  does not match `SHA256SUMS`. A hang (no LIPC answer in 180 s) counts as a failure.
+- Without a computer: KUAL → "Safe mode" (reboot, accelerator off/on, everything off).
+- Full rollback: `sh /var/local/kppfast/rollback.sh --restart` restores the stock upstart job and removes
   `/var/local/kppfast`.
 
-## Паритет
+## Parity
 
-Ускорение засчитывается, только если экраны и поведение совпадают со штатными: снимки экрана на одинаковых
-страницах (Библиотека, Главная, страница книги, быстрое меню; строка состояния замаскирована), сравнение файлов кэша,
-поведенческий прогон (сортировка, вид списком, фильтр). Подробно в [METHODOLOGY](docs/METHODOLOGY.md).
+A speed-up counts only if screens and behaviour match stock: screenshots on the same pages (Library, Home, a book
+page, quick settings; status bar masked), cache files compared, a behaviour pass (sort, list view, filter). See
+[METHODOLOGY](docs/METHODOLOGY.md).
 
-## Что не сработало (честно)
+## What did not work (honest list)
 
-- `KPPLOG=2` (глушить ещё и ~60 строк детектора зависаний на ход): выигрыша нет.
-- `KPPCC_LZ4=1` (свой быстрый LZ4-декодер тайлов кэша): выигрыша нет, время LZ4 в профиле было сжатием на первом визите.
-- Ускорение быстрого меню (`libkppqs`, короче таймеры окна): появлялось второе обновление экрана, отклонено.
-- Патч Java-читалки: на устройстве книги показывает KUX внутри KPPMainApp, Java-читалка там не используется.
-- Пересборка cairo, замена pixman/libjpeg, пул потоков вместо `std::thread`: риск больше выигрыша, не делалось.
-- `libkppio` (буферизованное чтение) собран и прошёл тесты, на устройстве не мерился, в базовой конфигурации его нет.
-- Первый визит страницы (~0,42 с) упирается в чтение обложки обратно из X; заранее заполнить кэш не удалось.
+- `KPPLOG=2` (also dropping ~60 freeze-detector lines per turn): no gain.
+- `KPPCC_LZ4=1` (own fast LZ4 decoder for cache tiles): no gain; the LZ4 time in the profile was compression on first visits.
+- Faster quick settings (`libkppqs`, shorter window timers): caused a second screen update, rejected.
+- Patching the Java reader: on the device books are rendered by KUX inside KPPMainApp, the Java reader is not used.
+- Rebuilding cairo, swapping pixman/libjpeg, a thread pool instead of `std::thread`: more risk than gain, not done.
+- `libkppio` (buffered reads) is built and unit-tested but was not measured on the device; not in the baseline.
+- First visit of a page (~0.42 s) is bound by reading the cover back from X; pre-filling the cache was not achieved.
 
-## Установка
+## Install
 
-Только для Kindle Oasis 3 на прошивке 5.18.2, только на свой страх и риск. Джейлбрейк в этот проект не входит, и мы
-на него не ссылаемся. Порядок: [docs/REPRODUCE.md](docs/REPRODUCE.md).
+Kindle Oasis 3 on firmware 5.18.2 only, entirely at your own risk. Jailbreaking is not part of this project and is
+not linked. Steps: [docs/REPRODUCE.md](docs/REPRODUCE.md).
 
-## Структура
+## Layout
 
-`src/` исходники библиотек · `tools/` генератор ожидаемых байтов, инструмент для байт-кода Hermes · `install/`
-лаунчер, установщик, откат · `bench/` стенд замеров · `safemode/` KUAL-расширение · `docs/` методика, результаты,
-картинки · `build.sh` сборка в Docker.
+`src/` library sources · `tools/` expected-bytes generator, Hermes bytecode tool · `install/` launcher, installer,
+rollback · `bench/` benchmark harness · `safemode/` KUAL extension · `docs/` methodology, results, images ·
+`build.sh` Docker build.
 
-## Лицензия
+## License
 
-[PolyForm Noncommercial 1.0.0](LICENSE.md) и [NOTICE](NOTICE.md): только некоммерческое использование, производные
-работы и форки обязаны сохранять Required Notice и ссылку на исходный проект. Лицензия распространяется только на
-собственный код и документацию автора; никаких прав на прошивку, бинарники, книги и товарные знаки Amazon она не даёт.
+[PolyForm Noncommercial 1.0.0](LICENSE.md) and [NOTICE](NOTICE.md): noncommercial use only; derivative works and
+forks must keep the Required Notice and link to the original project. The license covers only the author's original
+code and documentation and grants no rights to Amazon firmware, binaries, books or trademarks.
 
 Copyright 2026 Artyom Lemelson (https://github.com/Lemelson)
