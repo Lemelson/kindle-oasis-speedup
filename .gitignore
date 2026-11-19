@@ -1,0 +1,19 @@
+# build outputs (rebuild with ./build.sh)
+out/
+*.so
+*.o
+kinject
+# measurement runs and anything pulled from a device: private, never commit
+runs/
+syms/
+klibs/
+# generated from YOUR device's binaries: contains firmware bytes, never commit or publish
+hot_bytes.h
+*.hbc
+*.jar
+*.azw*
+*.kfx
+*.mobi
+*.png
+__pycache__/
+.device-lock*

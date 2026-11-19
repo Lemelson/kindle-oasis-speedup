@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension>
+  <information>
+    <name>Safe Mode</name>
+    <version>1.0</version>
+    <author>Artyom Lemelson</author>
+    <id>safemode</id>
+  </information>
+  <menus>
+    <menu type="json">menu.json</menu>
+  </menus>
+</extension>

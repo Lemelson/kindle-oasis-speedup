@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 520" width="980" height="520" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="24" y="38" font-size="22" font-weight="700" fill="#1b1f24">Library page turn, Kindle Oasis 3 (FW 5.18.2)</text>
+<text x="24" y="64" font-size="14" fill="#57606a">Median time from key press to settled screen, interleaved A/B runs, 20 turns per phase. One device.</text>
+<line x1="420" y1="84" x2="420" y2="432" stroke="#eaeef2"/>
+<text x="420" y="450" font-size="12" fill="#6e7781" text-anchor="middle">0.0 s</text>
+<line x1="500" y1="84" x2="500" y2="432" stroke="#eaeef2"/>
+<text x="500" y="450" font-size="12" fill="#6e7781" text-anchor="middle">0.1 s</text>
+<line x1="580" y1="84" x2="580" y2="432" stroke="#eaeef2"/>
+<text x="580" y="450" font-size="12" fill="#6e7781" text-anchor="middle">0.2 s</text>
+<line x1="660" y1="84" x2="660" y2="432" stroke="#eaeef2"/>
+<text x="660" y="450" font-size="12" fill="#6e7781" text-anchor="middle">0.3 s</text>
+<line x1="740" y1="84" x2="740" y2="432" stroke="#eaeef2"/>
+<text x="740" y="450" font-size="12" fill="#6e7781" text-anchor="middle">0.4 s</text>
+<line x1="820" y1="84" x2="820" y2="432" stroke="#eaeef2"/>
+<text x="820" y="450" font-size="12" fill="#6e7781" text-anchor="middle">0.5 s</text>
+<line x1="900" y1="84" x2="900" y2="432" stroke="#eaeef2"/>
+<text x="900" y="450" font-size="12" fill="#6e7781" text-anchor="middle">0.6 s</text>
+<line x1="980" y1="84" x2="980" y2="432" stroke="#eaeef2"/>
+<text x="980" y="450" font-size="12" fill="#6e7781" text-anchor="middle">0.7 s</text>
+<line x1="1060" y1="84" x2="1060" y2="432" stroke="#eaeef2"/>
+<text x="1060" y="450" font-size="12" fill="#6e7781" text-anchor="middle">0.8 s</text>
+<text x="408" y="118.0" font-size="14" fill="#1b1f24" text-anchor="end">Amazon stock</text>
+<rect x="420" y="96" width="592" height="34" rx="4" fill="#9aa3ad"/>
+<text x="1020" y="118.0" font-size="14" font-weight="700" fill="#1b1f24">0.70–0.74 s</text>
+<text x="408" y="166.0" font-size="14" fill="#1b1f24" text-anchor="end">+ libkppfs (stat cache) + X11 shared memory</text>
+<rect x="420" y="144" width="548" height="34" rx="4" fill="#7fa7d6"/>
+<text x="976" y="166.0" font-size="14" font-weight="700" fill="#1b1f24">0.67–0.70 s</text>
+<text x="408" y="214.0" font-size="14" fill="#1b1f24" text-anchor="end">+ cover read-back from window (PIXBUFWIN)</text>
+<rect x="420" y="192" width="520" height="34" rx="4" fill="#6a98cf"/>
+<text x="948" y="214.0" font-size="14" font-weight="700" fill="#1b1f24">0.65 s</text>
+<text x="408" y="262.0" font-size="14" fill="#1b1f24" text-anchor="end">+ libkppmalloc + libkppimg</text>
+<rect x="420" y="240" width="496" height="34" rx="4" fill="#5589c8"/>
+<text x="924" y="262.0" font-size="14" font-weight="700" fill="#1b1f24">0.59–0.62 s</text>
+<text x="408" y="310.0" font-size="14" fill="#1b1f24" text-anchor="end">+ hot patches, side, db, log switch</text>
+<rect x="420" y="288" width="400" height="34" rx="4" fill="#3f79c0"/>
+<text x="828" y="310.0" font-size="14" font-weight="700" fill="#1b1f24">0.50 s</text>
+<text x="408" y="358.0" font-size="14" fill="#1b1f24" text-anchor="end">+ Amazon's cover cache 2 → 16 MB, kept across reboots</text>
+<rect x="420" y="336" width="328" height="34" rx="4" fill="#2a69b8"/>
+<text x="756" y="358.0" font-size="14" font-weight="700" fill="#1b1f24">0.41 s</text>
+<text x="408" y="406.0" font-size="14" fill="#1b1f24" text-anchor="end">+ Amazon's whole-item cache 1 → 16 MB (revisits)</text>
+<rect x="420" y="384" width="204" height="34" rx="4" fill="#1f8a4c"/>
+<text x="632" y="406.0" font-size="14" font-weight="700" fill="#1b1f24">≈0.25 s</text>
+<text x="24" y="476" font-size="13" fill="#57606a">First visit of a Library page with all caches: ≈0.42 s. Revisits: ≈0.25 s (stock: 0.59–0.74 s). Each step is cumulative.</text>
+<text x="24" y="496" font-size="13" fill="#57606a">Pixel parity of every step checked against stock screens. Sources: docs/RESULTS.md.</text>
+</svg>

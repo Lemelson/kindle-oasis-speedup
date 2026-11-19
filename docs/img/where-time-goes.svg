@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 470" width="1000" height="470" font-family="-apple-system, Segoe UI, Helvetica, Arial, sans-serif">
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="24" y="38" font-size="22" font-weight="700" fill="#1b1f24">Where the main thread spends CPU per Library page turn</text>
+<text x="24" y="64" font-size="14" fill="#57606a">SIGPROF sampling profiler (libkppprof), 10 ms samples, 40–60 turns per profile, ms per turn. One device.</text>
+<text x="138" y="122" font-size="15" font-weight="700" fill="#1b1f24" text-anchor="end">Stock</text>
+<rect x="150.0" y="96" width="202.4" height="40" fill="#c9d1d9" stroke="#ffffff" stroke-width="1.5"/>
+<text x="251.2" y="121" font-size="12" fill="#1b1f24" text-anchor="middle">88</text>
+<rect x="352.4" y="96" width="138.0" height="40" fill="#7fa7d6" stroke="#ffffff" stroke-width="1.5"/>
+<text x="421.4" y="121" font-size="12" fill="#1b1f24" text-anchor="middle">60</text>
+<rect x="490.4" y="96" width="80.5" height="40" fill="#5589c8" stroke="#ffffff" stroke-width="1.5"/>
+<text x="530.6" y="121" font-size="12" fill="#1b1f24" text-anchor="middle">35</text>
+<rect x="570.9" y="96" width="66.7" height="40" fill="#e3a857" stroke="#ffffff" stroke-width="1.5"/>
+<text x="604.2" y="121" font-size="12" fill="#1b1f24" text-anchor="middle">29</text>
+<rect x="637.6" y="96" width="59.8" height="40" fill="#9bc39b" stroke="#ffffff" stroke-width="1.5"/>
+<text x="667.5" y="121" font-size="12" fill="#1b1f24" text-anchor="middle">26</text>
+<rect x="697.4" y="96" width="41.4" height="40" fill="#b9a0d0" stroke="#ffffff" stroke-width="1.5"/>
+<text x="718.1" y="121" font-size="12" fill="#1b1f24" text-anchor="middle">18</text>
+<rect x="738.8" y="96" width="41.4" height="40" fill="#d98c8c" stroke="#ffffff" stroke-width="1.5"/>
+<text x="759.5" y="121" font-size="12" fill="#1b1f24" text-anchor="middle">18</text>
+<rect x="780.2" y="96" width="31.0" height="40" fill="#a7b6c2" stroke="#ffffff" stroke-width="1.5"/>
+<rect x="811.2" y="96" width="20.7" height="40" fill="#e8c48a" stroke="#ffffff" stroke-width="1.5"/>
+<rect x="831.9" y="96" width="18.4" height="40" fill="#8fb8de" stroke="#ffffff" stroke-width="1.5"/>
+<rect x="850.3" y="96" width="16.1" height="40" fill="#f0d36b" stroke="#ffffff" stroke-width="1.5"/>
+<rect x="866.4" y="96" width="67.8" height="40" fill="#e6e9ec" stroke="#ffffff" stroke-width="1.5"/>
+<text x="900.4" y="121" font-size="12" fill="#1b1f24" text-anchor="middle">29.5</text>
+<text x="944.3" y="122" font-size="16" font-weight="700" fill="#1b1f24">341 ms</text>
+<rect x="150" y="148" width="12" height="12" fill="#c9d1d9"/>
+<text x="168" y="159" font-size="12" fill="#1b1f24">libc (malloc, stdio, I/O) 88</text>
+<rect x="345.0" y="148" width="12" height="12" fill="#7fa7d6"/>
+<text x="363.0" y="159" font-size="12" fill="#1b1f24">GDK 60</text>
+<rect x="394.8" y="148" width="12" height="12" fill="#5589c8"/>
+<text x="412.8" y="159" font-size="12" fill="#1b1f24">cairo 35</text>
+<rect x="457.8" y="148" width="12" height="12" fill="#e3a857"/>
+<text x="475.8" y="159" font-size="12" fill="#1b1f24">libImageUtils (JPEG scale, gray→RGB) 29</text>
+<rect x="725.4000000000001" y="148" width="12" height="12" fill="#9bc39b"/>
+<text x="743.4000000000001" y="159" font-size="12" fill="#1b1f24">pixman 26</text>
+<rect x="795.0000000000001" y="148" width="12" height="12" fill="#b9a0d0"/>
+<text x="813.0000000000001" y="159" font-size="12" fill="#1b1f24">glib / gobject 18</text>
+<rect x="150" y="170" width="12" height="12" fill="#d98c8c"/>
+<text x="168" y="181" font-size="12" fill="#1b1f24">ReactNative (LZ4 cache) 18</text>
+<rect x="331.79999999999995" y="170" width="12" height="12" fill="#a7b6c2"/>
+<text x="349.79999999999995" y="181" font-size="12" fill="#1b1f24">pthread 13.5</text>
+<rect x="407.99999999999994" y="170" width="12" height="12" fill="#e8c48a"/>
+<text x="425.99999999999994" y="181" font-size="12" fill="#1b1f24">libjpeg 9</text>
+<rect x="484.19999999999993" y="170" width="12" height="12" fill="#8fb8de"/>
+<text x="502.19999999999993" y="181" font-size="12" fill="#1b1f24">libX11 8</text>
+<rect x="553.8" y="170" width="12" height="12" fill="#f0d36b"/>
+<text x="571.8" y="181" font-size="12" fill="#1b1f24">libm (sin in Lanczos) 7</text>
+<rect x="722.4" y="170" width="12" height="12" fill="#e6e9ec"/>
+<text x="740.4" y="181" font-size="12" fill="#1b1f24">other 29.5</text>
+<text x="138" y="276" font-size="15" font-weight="700" fill="#1b1f24" text-anchor="end">Accelerated</text>
+<rect x="150.0" y="250" width="69.0" height="40" fill="#e3a857" stroke="#ffffff" stroke-width="1.5"/>
+<text x="184.5" y="275" font-size="12" fill="#1b1f24" text-anchor="middle">30</text>
+<rect x="219.0" y="250" width="66.7" height="40" fill="#5589c8" stroke="#ffffff" stroke-width="1.5"/>
+<text x="252.3" y="275" font-size="12" fill="#1b1f24" text-anchor="middle">29</text>
+<rect x="285.7" y="250" width="36.8" height="40" fill="#9bc39b" stroke="#ffffff" stroke-width="1.5"/>
+<text x="304.1" y="275" font-size="12" fill="#1b1f24" text-anchor="middle">16</text>
+<rect x="322.5" y="250" width="36.8" height="40" fill="#b9a0d0" stroke="#ffffff" stroke-width="1.5"/>
+<text x="340.9" y="275" font-size="12" fill="#1b1f24" text-anchor="middle">16</text>
+<rect x="359.3" y="250" width="32.2" height="40" fill="#8fb8de" stroke="#ffffff" stroke-width="1.5"/>
+<rect x="391.5" y="250" width="29.9" height="40" fill="#d98c8c" stroke="#ffffff" stroke-width="1.5"/>
+<rect x="421.4" y="250" width="27.6" height="40" fill="#c9d1d9" stroke="#ffffff" stroke-width="1.5"/>
+<rect x="449.0" y="250" width="13.8" height="40" fill="#a7b6c2" stroke="#ffffff" stroke-width="1.5"/>
+<rect x="462.8" y="250" width="170.2" height="40" fill="#e6e9ec" stroke="#ffffff" stroke-width="1.5"/>
+<text x="547.9" y="275" font-size="12" fill="#1b1f24" text-anchor="middle">74</text>
+<text x="643.0" y="276" font-size="16" font-weight="700" fill="#1b1f24">210 ms</text>
+<rect x="150" y="302" width="12" height="12" fill="#e3a857"/>
+<text x="168" y="313" font-size="12" fill="#1b1f24">cached-tile path (4→8 bit→RGB→gray) 30</text>
+<rect x="411.0" y="302" width="12" height="12" fill="#5589c8"/>
+<text x="429.0" y="313" font-size="12" fill="#1b1f24">cairo (badges, ribbons) 29</text>
+<rect x="592.8" y="302" width="12" height="12" fill="#9bc39b"/>
+<text x="610.8" y="313" font-size="12" fill="#1b1f24">pixman 16</text>
+<rect x="662.4" y="302" width="12" height="12" fill="#b9a0d0"/>
+<text x="680.4" y="313" font-size="12" fill="#1b1f24">glib / gobject 16</text>
+<rect x="784.8" y="302" width="12" height="12" fill="#8fb8de"/>
+<text x="802.8" y="313" font-size="12" fill="#1b1f24">X protocol I/O 14</text>
+<rect x="907.1999999999999" y="302" width="12" height="12" fill="#d98c8c"/>
+<text x="925.1999999999999" y="313" font-size="12" fill="#1b1f24">LZ4 13</text>
+<rect x="150" y="324" width="12" height="12" fill="#c9d1d9"/>
+<text x="168" y="335" font-size="12" fill="#1b1f24">memcpy 12</text>
+<rect x="219.6" y="324" width="12" height="12" fill="#a7b6c2"/>
+<text x="237.6" y="335" font-size="12" fill="#1b1f24">mmap / munmap 6</text>
+<rect x="335.4" y="324" width="12" height="12" fill="#e6e9ec"/>
+<text x="353.4" y="335" font-size="12" fill="#1b1f24">other 74</text>
+<text x="24" y="392" font-size="13" fill="#57606a">"Accelerated" = fs, x11, malloc, img, hot, side, db, log + 16 MB cover cache, measured with the profiler loaded. JS thread: 145 → 129 ms.</text>
+<text x="24" y="412" font-size="13" fill="#57606a">With the 16 MB whole-item cache on top, a revisit costs 6–7 main-thread ticks (≈65 ms) instead of 18–19 (≈190 ms): Amazon's own</text>
+<text x="24" y="430" font-size="13" fill="#57606a">cache then draws the finished grid item and skips the badge/ribbon drawing, X read-back and tile path entirely.</text>
+</svg>

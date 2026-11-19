@@ -1,0 +1,14 @@
+{
+  "items": [
+    {
+      "name": "Безопасный режим",
+      "priority": -10,
+      "items": [
+        {"name": "Экран завис / пропала верхняя строка: перезагрузить", "priority": 1, "action": "./bin/safe.sh", "params": "reboot", "exitmenu": true},
+        {"name": "Выключить ускоритель библиотеки и перезагрузить", "priority": 2, "action": "./bin/safe.sh", "params": "kppfast-off", "exitmenu": true},
+        {"name": "Включить ускоритель обратно и перезагрузить", "priority": 3, "action": "./bin/safe.sh", "params": "kppfast-on", "exitmenu": true},
+        {"name": "Как у Amazon: выключить все доработки и перезагрузить", "priority": 4, "action": "./bin/safe.sh", "params": "all-off", "exitmenu": true}
+      ]
+    }
+  ]
+}
