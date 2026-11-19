@@ -15,7 +15,7 @@ set in `/var/local/kppfast/env`. Inside any other process the interposers stay i
 | `kppdb` | reuse of prepared SQLite statements of the Library queries | `KPPDB_STMTCACHE=1` | `_STMTCACHE_MAX _WINDOW _QUIETLOG _STATS` |
 | `kpplog` | one switch for KPPMainApp log spam; `touch /var/local/kppfast/verbose-logs` restores every line without restart | `KPPLOG=1` | `KPPLOG=2` (no gain), `_STATS` |
 | `kppcc` | Amazon's cover cache 2 → 16 MB and whole-item cache 1 → 16 MB (hash-checked immediate rewrite), finished cache files mirrored to flash and restored at start | `KPPCC=1 KPPCC_CAP_MB=16 KPPCC_BOOK_MB=16 KPPCC_BOOK=1` | `_LZ4 (no gain) _MAX_MB _STORE _FSYNC _LOG` |
-| `kppgrip` | turns the touch driver's grip suppression off between a long-press and the release, so a lift at the edge is delivered. **This source (v2) failed its first device test; the baseline was measured with v1, which is not in this repository** | `KPPGRIP=1` (v1) | `_MAX_MS _FOCUS_MS _GATE _WIN _XEV _STATE _LOG` |
+| `kppgrip` | turns the touch driver's grip suppression off between a long-press and the release, so a lift at the edge is delivered. `kppgrip.c` is v1, the version measured on the device; `kppgrip-v2-experimental.c` is a hardened rewrite that failed its first device test (its unit test `griptest.sh` covers v2) | `KPPGRIP=1` (v1) | `_MAX_MS _FOCUS_MS _GATE _WIN _XEV _STATE _LOG` |
 | `kppio` | times blocking file I/O per burst (diagnostic) and optional bigger stdio buffer / read-ahead for book files (built and unit-tested, not measured on the device) | (off) | `KPPIO _STAT _TRACE _GAP_MS _BUF_KB _RA_KB _RA_TAIL_KB _LOG _LOG_MAX_KB` |
 | `kppprof` | SIGPROF sampling profiler for measurements only | (off) | `KPPPROF _DIR _US` |
 

@@ -19,9 +19,7 @@ The public license does not grant any right to:
   example the glibc libraries copied from your own device for linking).
 
 Users must obtain any required third-party material lawfully and comply with its
-separate license, terms, and applicable law. `tools/hbc.py` requires the
-separately installed third-party package hermes-dec, which is not included here
-and is under its own license.
+separate license, terms, and applicable law.
 
 ## Copies, Forks, and Attribution
 

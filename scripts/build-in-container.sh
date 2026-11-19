@@ -41,10 +41,11 @@ gcc -O1 -Wall -shared -fPIC -o $T/libfault.so $S/kppcc/fault.c -ldl
 gcc -O1 -Wall -shared -fPIC -o $T/libX11.so.6 $S/kppgrip/fakex.c -Wl,-soname,libX11.so.6
 gcc -O1 -Wall -shared -fPIC -o $T/libXi.so.6 $S/kppgrip/fakexi.c -Wl,-soname,libXi.so.6 -Wl,--no-as-needed $T/libX11.so.6
 gcc -O1 -Wall -shared -fPIC -o $T/libfakegdk.so $S/kppgrip/fakegdk.c -Wl,-soname,libfakegdk.so
+gcc -O2 -Wall -shared -fPIC -o $T/libkppgrip-v2.so $S/kppgrip/kppgrip-v2-experimental.c -ldl -lpthread
 gcc -O1 -Wall -o $T/griptest $S/kppgrip/griptest.c $T/libfakegdk.so $T/libX11.so.6 -lpthread -ldl
 gcc -O1 -Wall -Wno-unused-result -o $T/iotest $S/kppio/iotest.c -lpthread
 echo "== running unit tests"; rc=0
-sh $S/kppgrip/griptest.sh > $T/griptest.log 2>&1 || rc=$((rc + 1)); tail -1 $T/griptest.log
+sh $S/kppgrip/griptest.sh $T/libkppgrip-v2.so > $T/griptest.log 2>&1 || rc=$((rc + 1)); tail -1 $T/griptest.log
 sh $S/kppcc/cctest6.sh > $T/cctest6.log 2>&1 || rc=$((rc + 1)); tail -1 $T/cctest6.log
 sh $S/kppio/iotest.sh > $T/iotest.log 2>&1 || rc=$((rc + 1)); tail -1 $T/iotest.log
 return $rc

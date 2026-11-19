@@ -58,9 +58,9 @@ depending on its cache state (see [RESULTS](docs/RESULTS.md#parity)).
 - **Text selection.** The touch driver's grip suppression swallows a finger lift near the right and bottom edges
   (≈40 px), so selecting across a page hung. `libkppgrip` switches suppression off for the duration of the gesture
   only; `KPPHOT_RSEL_EDGE=700` shortens the edge hold from 1000 to 700 ms. See the
-  [diagram](docs/img/cross-page-selection.svg). Note: the results were measured with the first version of
-  `libkppgrip`; the version in `src/kppgrip` is a hardened rewrite that did **not** pass its first device test (see
-  [RESULTS](docs/RESULTS.md#cross-page-text-selection-reader)). Treat `KPPGRIP` as experimental.
+  [diagram](docs/img/cross-page-selection.svg). The results were measured with `src/kppgrip/kppgrip.c` (v1); the hardened
+  rewrite `kppgrip-v2-experimental.c` did **not** pass its first device test (see
+  [RESULTS](docs/RESULTS.md#cross-page-text-selection-reader)).
 
 ![Where the time goes](docs/img/where-time-goes.svg)
 

@@ -78,7 +78,7 @@ device (read it first; it expects all ten libraries and the bench helpers in `/v
 
 Two notes on that configuration: `KPPSIDE_WEBLAB=1` stops the app's A/B-experiment ("weblab") exposure records from
 being passed on (see the README, "Amazon services and telemetry"); leave it off if you do not want to change what
-the device reports. `KPPGRIP=1` was measured with an earlier version of `libkppgrip`; the source here failed its first
+the device reports. `KPPGRIP=1` was measured with `src/kppgrip/kppgrip.c` (v1); `kppgrip-v2-experimental.c` failed its first
 device test (see RESULTS).
 
 ### 6. Measure (A/B)
@@ -106,5 +106,4 @@ status bar (rows 0–90), compare pixel by pixel. Keep these screenshots private
 
 ### Java / Hermes
 
-The shipped speed-up does not patch Java or Hermes bytecode. `tools/hbc.py` is a research tool for Hermes bytecode
-v84 that edits a copy you extract from your own device; never publish original or patched bundles.
+The shipped speed-up does not patch Java or Hermes bytecode, and this repository contains no tool for doing so.

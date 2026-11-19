@@ -1,5 +1,5 @@
 #!/bin/sh
-# Unit test of libkppgrip.so with fake X/GDK (run inside the build container, see ../../build.sh test).
+# Unit test of the experimental libkppgrip v2 with fake X/GDK (run inside the build container, see ../../build.sh test).
 LIB=${1:-/out/libkppgrip.so}; T=/out/test; F=0
 cp $T/griptest /tmp/KPPMainAppgriptest; cp $T/griptest /tmp/othergriptest
 export LD_LIBRARY_PATH=$T KPPGRIP_STATE=/tmp/kppgrip.state KPPFAKEX_PROP=/tmp/fakex.prop KPPGRIP_LOG=/tmp/grip.log
