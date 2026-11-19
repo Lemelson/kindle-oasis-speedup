@@ -19,22 +19,27 @@ The public license does not grant any right to:
   example the glibc libraries copied from your own device for linking).
 
 Users must obtain any required third-party material lawfully and comply with its
-separate license, terms, and applicable law.
+separate license, terms, and applicable law. `tools/hbc.py` requires the
+separately installed third-party package hermes-dec, which is not included here
+and is under its own license.
 
-## Derivative Works, Forks, and Attribution
+## Copies, Forks, and Attribution
 
-Any copy, fork, modification, or derivative work must keep this Required Notice
-and must credit the original project with a link to it
-(https://github.com/Lemelson). Removing or hiding the attribution is not
-permitted.
+Under the license, anyone who passes on a copy of any part of this project,
+changed or not, must include the license terms (or their URL) and the
+`Required Notice:` line above. In addition, the author asks (this is a request,
+not a license condition) that forks and derived projects credit the original
+project with a link to https://github.com/Lemelson/kindle-oasis-speedup.
 
-## No Commercial Use
+## Noncommercial Use
 
-Commercial use of any kind is not permitted. This includes selling the code,
-binaries built from it, devices pre-loaded with it, installation services,
-paid support, or using it inside a commercial product or service.
+The license permits only the noncommercial purposes it defines (see
+`LICENSE.md`). Examples of what it does not license: selling the code or
+binaries built from it, devices pre-loaded with it, installation services, paid
+support, or use inside a commercial product or service. For anything else,
+ask the author.
 
-## Research and Personal Use Only; No Warranty
+## Research Project; No Warranty
 
 This project documents personal performance research on the author's own
 device. It is provided "as is", without warranty of any kind and without
@@ -67,4 +72,5 @@ Where a runtime patch must verify the exact firmware code it changes, the
 expected bytes are generated locally from the user's own device with
 `tools/genbytes.py`, or checked by hash only. Generated headers, built
 libraries, and measurement data are local outputs and are not licensed or
-distributed by this repository.
+distributed by this repository. A `libkpphot.so` built with a generated header
+embeds those firmware bytes and must not be redistributed.
