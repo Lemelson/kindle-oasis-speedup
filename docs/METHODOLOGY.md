@@ -2,9 +2,11 @@
 
 ## Rules
 - Goal: make the Library as fast as possible while staying 1:1 with stock: identical screens, identical behaviour of
-  every feature, nothing broken.
+  every feature, nothing broken. One exception was accepted deliberately: larger Amazon caches show Amazon's own
+  cached (4-bit) tile variant more often (see RESULTS, Parity).
 - Every change has its own `KPP*` switch, default off, with fallback to the original on anything unexpected, and is
-  gated on the exact firmware code it depends on (file size + exact bytes or hash of every patched region).
+  gated on the exact firmware code it depends on (file size + exact bytes or hash of the checked region around every
+  patch site).
 - Never write Amazon's databases or configs (`/var/local/cc.db`), never modify `/usr`, `/opt/amazon`, `/app`; the only
   rootfs change is one line in `/etc/upstart/kppmainapp.conf`, done by `install/install.sh` with sha256 checks.
 - Never put extra files into `/opt/amazon/ebook/lib` (the framework loads every file there).
@@ -12,8 +14,9 @@
 ## Finding the cost
 1. Profile on the device with `src/kppprof` (SIGPROF sampler, `prof-run.sh`, `analyze.py`): CPU per thread, library
    and function per page turn. Stripped libraries mislabel symbols: check raw PC-offset histograms.
-2. Read what the hot code really is (disassembly of your own device files, kept private), then decide: interpose an
-   exported function, patch a few instructions in memory, or change a parameter of Amazon's own code.
+2. Read what the hot code really is (disassembly of your own device files, kept private and never published), then
+   decide: interpose an exported function, patch a few instructions in memory, or change a parameter of Amazon's own
+   code.
 3. Prefer un-starving Amazon's own mechanisms (cache size limits) over new code paths.
 
 ## Measuring
@@ -21,7 +24,9 @@
   representative.
 - `bench/kpp-bench.sh` runs on the device: restart KPPMainApp, open the Library, N forward turns from page 1, N back,
   N forward again; one JSON line per turn (settle ms, main/JS ticks); a hash of the first cover row after every turn
-  catches turns that did not change the page.
+  catches turns that did not change the page. "Settle" = from the start of the injected key press to the end of the
+  last 5 ms sample in which KPPMainApp's main + JS threads used CPU, followed by 150 ms of quiet (`bench/kinject.c`).
+  It does not include the e-ink refresh.
 - `bench/ab-run.sh` interleaves modes (B N B N), unsets every key a mode does not set, and records each run's real
   environment (`/proc/<pid>/environ`) so a mislabelled run is detected. `bench/compare.py` prints medians.
 - A gain counts only if it repeats in both rounds. Runs disturbed by handling the device are discarded, not fixed.
@@ -35,7 +40,8 @@ parity on fixed pages (Library p1/p3, Home, a book page, quick menu; status bar 
 keep or roll back each candidate → report → new baseline if all clean.
 
 ## Parity
-- Screens: baseline vs candidate on the same pages after a restart, pixel-exact outside the status bar.
+- Screens: baseline vs candidate on the same pages after a restart, pixel-exact outside the status bar (cache
+  changes: compared against both variants stock produces, see RESULTS).
 - Caches: cover-cache files compared byte for byte (header bytes Amazon leaves uninitialised are masked).
 - Behaviour: sort sheet, list view, filter sheet, Home ↔ Library, book open, quick settings.
 - Health: no new crash reports, VmRSS sane, fail-safe counters clean.

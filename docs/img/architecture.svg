@@ -20,11 +20,11 @@
 <line x1="324" y1="132" x2="368" y2="132" stroke="#57606a" stroke-width="2" marker-end="url(#a)"/>
 <line x1="700" y1="132" x2="744" y2="132" stroke="#57606a" stroke-width="2" marker-end="url(#a)"/>
 <rect x="24" y="240" width="992" height="300" rx="12" fill="#f3f8ff" stroke="#5589c8" stroke-width="2"/>
-<text x="40" y="266" font-size="16" font-weight="700" fill="#1b1f24">Amazon's KPPMainApp process (React Native for Linux + GTK2/GDK/cairo, unchanged binaries)</text>
+<text x="40" y="266" font-size="16" font-weight="700" fill="#1b1f24">Amazon's KPPMainApp process (React Native for Linux + GTK2/GDK/cairo; binaries unchanged on disk)</text>
 <rect x="40" y="280" width="232" height="130" rx="8" fill="#ffffff" stroke="#a8c1e0" stroke-width="1.5"/>
 <text x="52" y="302" font-size="13" font-weight="700" fill="#1b1f24">Files / I/O</text>
-<text x="52" y="320" font-size="12"  fill="#1b1f24">libkppfs  stat/open cache,</text>
-<text x="52" y="338" font-size="12"  fill="#1b1f24">  negative lookups</text>
+<text x="52" y="320" font-size="12"  fill="#1b1f24">libkppfs  stat memo,</text>
+<text x="52" y="338" font-size="12"  fill="#1b1f24">  missing-file memo</text>
 <text x="52" y="356" font-size="12"  fill="#1b1f24">libkppio  buffered reads</text>
 <text x="52" y="374" font-size="12"  fill="#1b1f24">  (built, not in baseline)</text>
 <rect x="284" y="280" width="232" height="130" rx="8" fill="#ffffff" stroke="#a8c1e0" stroke-width="1.5"/>

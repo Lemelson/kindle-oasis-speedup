@@ -32,19 +32,20 @@
 <text x="1012" y="164" font-size="12" fill="#1b1f24" text-anchor="middle">lift: lost →</text>
 <text x="1012" y="179" font-size="12" fill="#1b1f24" text-anchor="middle">selection frozen</text>
 <text x="340" y="212" font-size="13" fill="#57606a">Hold at the edge = 1000 ms + up to 300 ms throttle. After the turn the lift never arrives: no selection bar, next touch continues it.</text>
-<text x="340" y="270" font-size="15" font-weight="700" fill="#1f8a4c">With libkppgrip + KPPHOT_RSEL_EDGE=700</text>
+<text x="340" y="270" font-size="15" font-weight="700" fill="#1f8a4c">With libkppgrip (first version) + KPPHOT_RSEL_EDGE=700</text>
 <line x1="340" y1="300" x2="1020.4" y2="300" stroke="#8c959f" stroke-width="3"/>
 <circle cx="340" cy="300" r="6" fill="#57606a"/>
 <text x="340" y="324" font-size="12" fill="#1b1f24" text-anchor="middle">finger reaches</text>
 <text x="340" y="339" font-size="12" fill="#1b1f24" text-anchor="middle">the corner</text>
 <circle cx="735" cy="300" r="6" fill="#1f8a4c"/>
 <text x="735" y="324" font-size="12" fill="#1b1f24" text-anchor="middle">page turns</text>
-<text x="735" y="339" font-size="12" fill="#1b1f24" text-anchor="middle">≈0.94–1.0 s</text>
+<text x="735" y="339" font-size="12" fill="#1b1f24" text-anchor="middle">≈0.94–1.07 s</text>
 <circle cx="970" cy="300" r="6" fill="#1f8a4c"/>
 <text x="970" y="324" font-size="12" fill="#1b1f24" text-anchor="middle">lift delivered</text>
-<text x="970" y="339" font-size="12" fill="#1b1f24" text-anchor="middle">bar after 0.4–0.57 s</text>
+<text x="970" y="339" font-size="12" fill="#1b1f24" text-anchor="middle">bar after 0.37–0.57 s</text>
 <text x="340" y="372" font-size="13" fill="#57606a">Grip suppression is switched off only between the long-press and the release (30 s watchdog), then restored.</text>
-<text x="340" y="440" font-size="13" fill="#1b1f24">Stock turn 1195–1254 ms after reaching the corner → 935–1068 ms; release delivered in every run (3/3 and 6/6 full gestures).</text>
+<text x="340" y="440" font-size="13" fill="#1b1f24">Stock turn 1195–1254 ms after reaching the corner → 935–1068 ms with 700 ms; release delivered in every run (3/3 and 6/6 gestures).</text>
 <text x="340" y="460" font-size="13" fill="#1b1f24">Library page turns with both libs loaded: unchanged (neutral A/B).</text>
 <text x="340" y="480" font-size="13" fill="#57606a">Root cause found on the device: XI property "Multitouch Grip Suppression" of the touch driver.</text>
+<text x="340" y="500" font-size="13" fill="#57606a">Measured with the first version of libkppgrip; the rewrite in src/kppgrip failed its first device test.</text>
 </svg>
