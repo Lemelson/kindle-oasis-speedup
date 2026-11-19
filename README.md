@@ -1,6 +1,6 @@
 # kppfast: an unofficial UI speed-up for the Kindle Oasis 3
 
-[Reproduce](docs/REPRODUCE.md) · [Results](docs/RESULTS.md) · [Methodology](docs/METHODOLOGY.md)
+[Reproduce](docs/REPRODUCE.md) · [Device setup](docs/DEVICE-SETUP.md) · [Results](docs/RESULTS.md) · [Methodology](docs/METHODOLOGY.md)
 
 > **Disclaimer.** This is educational and research documentation of the author's personal experiments on their own
 > device. It is not a recommendation to modify any device. Modifying a Kindle may violate Amazon's terms of use, may
@@ -135,7 +135,8 @@ reads, including reads of book files, and can enlarge their read buffer; it neve
 ## Install
 
 Kindle Oasis 3 on firmware 5.18.2 only, entirely at your own risk. Root access ("jailbreaking") is not part of this
-project, is not explained and is not linked. How the author set it up: [docs/REPRODUCE.md](docs/REPRODUCE.md).
+project: no exploit or tool is included or linked. How the author's device was prepared, as a historical record
+with a legal note: [docs/DEVICE-SETUP.md](docs/DEVICE-SETUP.md). How to reproduce the speed-up: [docs/REPRODUCE.md](docs/REPRODUCE.md).
 
 ## Layout
 

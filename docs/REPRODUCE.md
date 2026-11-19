@@ -20,7 +20,8 @@
 ### 0. Prerequisites
 
 - A Kindle Oasis 3, FW 5.18.2, that **you have already jailbroken yourself** with root shell access (SSH or USB
-  network) and KUAL. This project does not provide, explain or link jailbreak tools.
+  network) and KUAL. This project does not provide or link jailbreak tools; how the author's device was prepared is recorded in
+  [DEVICE-SETUP](DEVICE-SETUP.md).
 - A computer with Docker (the build runs in an `linux/arm/v7` container under QEMU) and Python 3.
 - `ssh` access configured under a host alias; the scripts use `KINDLE=<alias>` (default `kindle`).
 
