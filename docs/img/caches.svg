@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 690" width="1000" height="690" role="img" aria-labelledby="ttl dsc">
+<title id="ttl">Amazon's own caches, un-starved</title>
+<desc id="dsc">libkppcc raises Amazon's cover tile cache from 2 MB to 16 MB and its whole-item cache from 1 MB to 16 MB and mirrors both to flash, so a page costs about 0.42 s on its first visit and about 0.27 s on every later visit.</desc>
+<style>
+text{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif;fill:#1f2328}
+.t{font-size:26px;font-weight:700}
+.st{font-size:15px;fill:#59636e}
+.h{font-size:17px;font-weight:700}
+.l{font-size:15px}
+.lb{font-size:15px;font-weight:600}
+.s{font-size:13.5px;fill:#59636e}
+.sx{font-size:13.5px}
+.v{font-size:15px;font-weight:700;stroke:#ffffff;stroke-width:5px;stroke-linejoin:round;paint-order:stroke}
+.ax{font-size:13px;fill:#818b98}
+.m{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace;font-size:13.5px}
+.mb{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace;font-size:14px;font-weight:700}
+.badge{font-size:14px;font-weight:700}
+</style>
+<defs><marker id="arr" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#59636e"/></marker><marker id="arrg" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1a7f37"/></marker><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#d8dee4"/><line x1="0" y1="0" x2="0" y2="6" stroke="#8c959f" stroke-width="2.5"/></pattern><pattern id="hatchb" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#ddf4ff"/><line x1="0" y1="0" x2="0" y2="6" stroke="#6cb6ff" stroke-width="2.5"/></pattern></defs>
+<rect x="1" y="1" width="998" height="688" rx="18" fill="#ffffff" stroke="#d1d9e0" stroke-width="1.5"/>
+<text x="36" y="50" class="t">Amazon's own caches, un-starved</text>
+<text x="36" y="78" class="st">The biggest gain came from two stock caches that were too small on this device · one device, medians</text>
+<rect x="36" y="112" width="452" height="262" rx="12" fill="#f6f8fa" stroke="#d1d9e0" stroke-width="1"/>
+<text x="56" y="144" class="h">Cover tile cache</text>
+<text x="56" y="166" class="m" style="fill:#59636e">/mnt/kfxcache/kpp</text>
+<text x="56" y="188" class="s">Scaled cover tiles, stored 4-bit grey</text>
+<text x="56" y="216" class="sx" style="fill:#59636e">Amazon (stock)</text>
+<rect x="56" y="224" width="342" height="22" rx="4" fill="#ffffff" stroke="#d1d9e0" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="56" y="224" width="42.75" height="22" rx="4" fill="#8c959f"/>
+<text x="108.75" y="241" class="v">2 MB</text>
+<text x="56" y="266" class="s">≈56 tiles ≈ 6 pages; covers further away are decoded again</text>
+<text x="56" y="294" class="sx" style="fill:#0969da">kppfast (libkppcc)</text>
+<rect x="56" y="302" width="342" height="22" rx="4" fill="#0969da"/>
+<text x="408" y="319" class="v">16 MB</text>
+<text x="56" y="344" class="s">≈410 tiles (this library: ~480 items). The firmware itself</text>
+<text x="56" y="363" class="s">uses 16 MB on devices it considers bigger.</text>
+<rect x="512" y="112" width="452" height="262" rx="12" fill="#f6f8fa" stroke="#d1d9e0" stroke-width="1"/>
+<text x="532" y="144" class="h">Whole-item cache</text>
+<text x="532" y="166" class="m" style="fill:#59636e">/mnt/kfxcache/kppbook</text>
+<text x="532" y="188" class="s">The finished grid item: cover + ribbon + badges</text>
+<text x="532" y="216" class="sx" style="fill:#59636e">Amazon (stock)</text>
+<rect x="532" y="224" width="342" height="22" rx="4" fill="#ffffff" stroke="#d1d9e0" stroke-width="1" stroke-dasharray="3 3"/>
+<rect x="532" y="224" width="21.375" height="22" rx="4" fill="#8c959f"/>
+<text x="563.375" y="241" class="v">1 MB</text>
+<text x="532" y="266" class="s">2–3 Library pages</text>
+<text x="532" y="294" class="sx" style="fill:#0969da">kppfast (libkppcc)</text>
+<rect x="532" y="302" width="342" height="22" rx="4" fill="#0969da"/>
+<text x="884" y="319" class="v">16 MB</text>
+<text x="532" y="344" class="s">Firmware gives 35 MB only when RAM &gt; 512 MB;</text>
+<text x="532" y="363" class="s">this Oasis reports 482 MB, so it got 1 MB.</text>
+<rect x="36" y="400" width="928" height="96" rx="12" fill="#ddf4ff" stroke="#9cd1ff" stroke-width="1"/>
+<text x="56" y="432" class="h">Mirrored to flash, so both survive a reboot</text>
+<text x="56" y="458" class="sx" xml:space="preserve" style="white-space:pre"><tspan>Finished cache files are copied to </tspan><tspan class="m">/var/local/kppfast/covercache</tspan><tspan> (item cache in </tspan><tspan class="m">book/</tspan><tspan>) and</tspan></text>
+<text x="56" y="480" class="sx">restored at start. Same file format and keys: the caches stay Amazon's own, only the size limit changes.</text>
+<text x="40" y="530" class="h">Library page turn, final configuration (settle)</text>
+<text x="286" y="569" class="l" text-anchor="end">Amazon (stock)</text>
+<rect x="300" y="552" width="420" height="24" rx="4" fill="#8c959f"/>
+<rect x="716" y="552" width="28" height="24" rx="4" fill="#8c959f" fill-opacity="0.4"/>
+<text x="754" y="570" class="v">0.70–0.74 s</text>
+<text x="286" y="603" class="l" text-anchor="end">First visit of a page</text>
+<rect x="300" y="586" width="252" height="24" rx="4" fill="#4ac26b"/>
+<text x="562" y="604" class="v">≈0.42 s</text>
+<text x="286" y="637" class="l" text-anchor="end">Every later visit, also after a reboot</text>
+<rect x="300" y="620" width="156" height="24" rx="4" fill="#1a7f37"/>
+<rect x="452" y="620" width="16" height="24" rx="4" fill="#1a7f37" fill-opacity="0.4"/>
+<text x="478" y="638" class="v">≈0.27 s</text>
+</svg>

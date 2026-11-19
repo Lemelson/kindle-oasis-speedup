@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 656" width="1000" height="656" role="img" aria-labelledby="ttl dsc">
+<title id="ttl">Measured and left as stock</title>
+<desc id="dsc">Book open about 1.24 s warm, reader page turn about 0.115 s of software plus about 0.37 s of e-ink, wake from sleep clean at about 1.0 s and settled at 1.3 s, quick settings shown at about 0.9 s, sleep about 3.1 s. None of these was changed by kppfast.</desc>
+<style>
+text{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI','Helvetica Neue',Helvetica,Arial,sans-serif;fill:#1f2328}
+.t{font-size:26px;font-weight:700}
+.st{font-size:15px;fill:#59636e}
+.h{font-size:17px;font-weight:700}
+.l{font-size:15px}
+.lb{font-size:15px;font-weight:600}
+.s{font-size:13.5px;fill:#59636e}
+.sx{font-size:13.5px}
+.v{font-size:15px;font-weight:700;stroke:#ffffff;stroke-width:5px;stroke-linejoin:round;paint-order:stroke}
+.ax{font-size:13px;fill:#818b98}
+.m{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace;font-size:13.5px}
+.mb{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,'Liberation Mono',monospace;font-size:14px;font-weight:700}
+.badge{font-size:14px;font-weight:700}
+</style>
+<defs><marker id="arr" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#59636e"/></marker><marker id="arrg" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#1a7f37"/></marker><pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#d8dee4"/><line x1="0" y1="0" x2="0" y2="6" stroke="#8c959f" stroke-width="2.5"/></pattern><pattern id="hatchb" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="6" fill="#ddf4ff"/><line x1="0" y1="0" x2="0" y2="6" stroke="#6cb6ff" stroke-width="2.5"/></pattern></defs>
+<rect x="1" y="1" width="998" height="654" rx="18" fill="#ffffff" stroke="#d1d9e0" stroke-width="1.5"/>
+<text x="36" y="50" class="t">Measured and left as stock</text>
+<text x="36" y="78" class="st">Where the time goes outside the Library, and why kppfast does not touch it · one device, medians</text>
+<rect x="36" y="104" width="16" height="16" rx="3" fill="#8c959f"/>
+<text x="60" y="117" class="sx">software</text>
+<rect x="146.4" y="104" width="16" height="16" rx="3" fill="#d4a72c"/>
+<text x="170.4" y="117" class="sx">Amazon's Java reader</text>
+<rect x="344.4" y="104" width="16" height="16" rx="3" fill="url(#hatch)"/>
+<text x="368.4" y="117" class="sx">e-ink refresh</text>
+<rect x="491.3" y="104" width="16" height="16" rx="3" fill="#c4ccd5"/>
+<text x="515.3" y="117" class="sx">total, not split</text>
+<text x="40" y="152" class="lb">Book open, already opened before (tap → page fully shown)</text>
+<rect x="40" y="164" width="44.8" height="24" fill="#8c959f"/>
+<rect x="84.8" y="164" width="140" height="24" fill="#d4a72c"/>
+<rect x="224.8" y="164" width="70" height="24" fill="#8c959f"/>
+<rect x="294.8" y="164" width="95.2" height="24" fill="url(#hatch)"/>
+<rect x="40" y="164" width="350" height="24" fill="none" stroke="#ffffff" stroke-width="0"/>
+<text x="400" y="182" class="v">~1.24 s</text>
+<text x="40" y="210" class="s">~0.5 s is the Java reader before the page may be shown. A Java patch gained only −4 % (1240 → 1193 ms); not shipped.</text>
+<text x="40" y="240" class="lb">Reader page turn</text>
+<rect x="40" y="252" width="32.2" height="24" fill="#8c959f"/>
+<rect x="72.2" y="252" width="103.6" height="24" fill="url(#hatch)"/>
+<rect x="40" y="252" width="135.8" height="24" fill="none" stroke="#ffffff" stroke-width="0"/>
+<text x="185.8" y="270" class="v">~0.115 s + ~0.37 s</text>
+<text x="40" y="298" class="s">Software is already ~0.115 s; the rest is the e-ink waveform, which was not changed.</text>
+<text x="40" y="328" class="lb">Wake from sleep (power button)</text>
+<rect x="40" y="340" width="280" height="24" fill="url(#hatch)"/>
+<rect x="320" y="340" width="84" height="24" fill="url(#hatch)" opacity="0.4"/>
+<rect x="40" y="340" width="364" height="24" fill="none" stroke="#ffffff" stroke-width="0"/>
+<text x="414" y="358" class="v">clean ~1.0 s, settled ~1.3 s</text>
+<text x="40" y="386" class="s">Almost all e-ink: two full refreshes, the second removes screensaver ghosting. Dropping it (~0.45 s) was not done.</text>
+<text x="40" y="416" class="lb">Quick-settings panel</text>
+<rect x="40" y="428" width="252" height="24" fill="#c4ccd5"/>
+<rect x="40" y="428" width="252" height="24" fill="none" stroke="#ffffff" stroke-width="0"/>
+<text x="302" y="446" class="v">shown at ~0.9 s</text>
+<text x="40" y="474" class="s">Window-manager timer + one full refresh. Shorter timers caused a second screen update; rejected.</text>
+<text x="40" y="504" class="lb">Sleep (power button)</text>
+<rect x="40" y="516" width="868" height="24" fill="#c4ccd5"/>
+<rect x="40" y="516" width="868" height="24" fill="none" stroke="#ffffff" stroke-width="0"/>
+<text x="918" y="534" class="v">~3.1 s</text>
+<text x="40" y="562" class="s">Includes an 800 ms delay inside Amazon's screensaver program.</text>
+<line x1="40" y1="578" x2="40" y2="584" stroke="#c8d1da" stroke-width="1"/>
+<text x="40" y="600" class="ax" text-anchor="middle">0.0 s</text>
+<line x1="180" y1="578" x2="180" y2="584" stroke="#c8d1da" stroke-width="1"/>
+<text x="180" y="600" class="ax" text-anchor="middle">0.5 s</text>
+<line x1="320" y1="578" x2="320" y2="584" stroke="#c8d1da" stroke-width="1"/>
+<text x="320" y="600" class="ax" text-anchor="middle">1.0 s</text>
+<line x1="460" y1="578" x2="460" y2="584" stroke="#c8d1da" stroke-width="1"/>
+<text x="460" y="600" class="ax" text-anchor="middle">1.5 s</text>
+<line x1="600" y1="578" x2="600" y2="584" stroke="#c8d1da" stroke-width="1"/>
+<text x="600" y="600" class="ax" text-anchor="middle">2.0 s</text>
+<line x1="740" y1="578" x2="740" y2="584" stroke="#c8d1da" stroke-width="1"/>
+<text x="740" y="600" class="ax" text-anchor="middle">2.5 s</text>
+<line x1="880" y1="578" x2="880" y2="584" stroke="#c8d1da" stroke-width="1"/>
+<text x="880" y="600" class="ax" text-anchor="middle">3.0 s</text>
+<line x1="40" y1="578" x2="936" y2="578" stroke="#c8d1da" stroke-width="1"/>
+<text x="36" y="632" class="s">Wake: lighter part = from page clean to settled. Book open, first ever after a boot: ~4.3–5.0 s. Source: docs/RESULTS.md.</text>
+</svg>

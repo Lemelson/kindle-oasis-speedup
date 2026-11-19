@@ -16,20 +16,35 @@ repository holds the author's own code that speeds up Amazon's stock `KPPMainApp
 file: small `libkpp*.so` libraries loaded with `LD_PRELOAD`, a fail-safe launcher, a benchmark harness and a KUAL
 "Safe mode" extension.
 
-![Library page turn timeline](docs/img/page-turn-timeline.svg)
+## Before → after at a glance
 
-## Results (one device, medians)
+One device, medians.
 
-| | Amazon | kppfast |
-|---|---|---|
-| Library page turn, page seen before (also after a reboot) | 0.70–0.74 s | **≈0.26–0.28 s** |
-| Library page turn, page never seen before (caches empty) | 0.70–0.74 s | **≈0.42 s** |
-| Main-thread CPU per turn | 341 ms | 210 ms without the item cache; 60–70 ms on a revisit with it |
-| Page turn while selecting text across pages | ≈1.2–1.25 s, then the finger lift is lost | ≈0.94–1.07 s, lift delivered |
+![Before and after: Amazon stock vs kppfast](docs/img/before-after.svg)
 
-Page-turn time = injected key press until KPPMainApp's main and JS threads are idle (the e-ink refresh itself is not
-included; the time includes ~60–76 ms of key injection). CPU: SIGPROF profiles and per-turn tick counts. Details and
-the per-step table: [RESULTS](docs/RESULTS.md).
+| What | Amazon (stock) | kppfast | Change |
+|---|---|---|---|
+| Library page turn, page seen before\* | 0.70–0.74 s | **0.26–0.28 s** | **≈2.6× faster** |
+| Library page turn straight after a reboot, page seen before\* | 0.70–0.74 s | **0.26–0.28 s** | **≈2.6× faster** |
+| Library page turn, page never seen before (caches empty)\* | 0.70–0.74 s | **≈0.42 s** | **≈1.7× faster** |
+| Main-thread CPU per Library turn, page seen before | 341 ms | **60–70 ms** | **−81 %** |
+| Main-thread CPU per Library turn, without the whole-item cache | 341 ms | 210 ms | −38 % |
+| Selecting text across pages: page turn after reaching the corner | 1.20–1.25 s | **0.94–1.07 s** | ≈0.2 s sooner |
+| Selecting text across pages: finger lift after the turn | lost | **delivered (6/6 gestures)** | fixed |
+| Selecting text across pages: selection bar | never shown | **0.37–0.57 s after lifting** | fixed |
+| Book open, already opened before (tap → page fully shown) | ~1.24 s | not sped up | unchanged |
+| Reader page turn | ~0.115 s software + ~0.37 s e-ink | not sped up | unchanged |
+| Wake from sleep (power button) | page clean ~1.0 s, settled ~1.3 s | not sped up | unchanged |
+| Quick-settings panel | shown at ~0.9 s | not sped up | unchanged |
+| Sleep (power button) | ~3.1 s | not sped up | unchanged |
+
+\* Time to idle ("settle"): from the start of the injected key press until KPPMainApp's main and JS threads are idle
+(the e-ink refresh itself is not included; the time includes ~60–76 ms of key injection). CPU: SIGPROF profiles and
+per-turn tick counts. Text selection: first version of `libkppgrip` with a 700 ms edge hold. Details and the per-step
+table: [RESULTS](docs/RESULTS.md); why the last five rows were left as stock:
+[What did not work](#what-did-not-work-honest-list).
+
+![Library page turn, step by step](docs/img/page-turn-timeline.svg)
 
 Screens were compared with stock pixel by pixel. They match, except that the larger caches make Amazon's app show
 its own cached variant of a cover tile more often: Amazon stores tiles with 16 grey levels, so a cached tile differs
@@ -54,13 +69,16 @@ depending on its cache state (see [RESULTS](docs/RESULTS.md#parity)).
 - **Amazon's own caches un-starved.** The biggest gain came from stock caches, not new code: on this device the
   cover-tile cache is capped at 2 MB (≈6 pages) and the whole-item cache at 1 MB (2–3 pages). `libkppcc` raises both
   to 16 MB and mirrors finished cache files to flash so they survive reboots. (The firmware itself picks larger limits
-  on devices it considers bigger: 16 MB for the cover cache, 35 MB for the item cache.)
+  on devices it considers bigger: 16 MB for the cover cache, 35 MB for the item cache.) See the
+  [diagram](docs/img/caches.svg).
 - **Text selection.** The touch driver's grip suppression swallows a finger lift near the right and bottom edges
   (≈40 px), so selecting across a page hung. `libkppgrip` switches suppression off for the duration of the gesture
   only; `KPPHOT_RSEL_EDGE=700` shortens the edge hold from 1000 to 700 ms. See the
   [diagram](docs/img/cross-page-selection.svg). The results were measured with `src/kppgrip/kppgrip.c` (v1); the hardened
   rewrite `kppgrip-v2-experimental.c` did **not** pass its first device test (see
   [RESULTS](docs/RESULTS.md#cross-page-text-selection-reader)).
+
+![Amazon's own caches, un-starved](docs/img/caches.svg)
 
 ![Where the time goes](docs/img/where-time-goes.svg)
 
@@ -112,6 +130,8 @@ reads, including reads of book files, and can enlarge their read buffer; it neve
   refreshes (the second one removes ghosting of the screensaver cover). Dropping it would save ~0.45 s at the cost of
   possible ghosting; not done. The kppfast libraries and the other additions add no measurable delay on wake.
 
+![Measured and left as stock](docs/img/unchanged.svg)
+
 ## Install
 
 Kindle Oasis 3 on firmware 5.18.2 only, entirely at your own risk. Root access ("jailbreaking") is not part of this
@@ -119,7 +139,7 @@ project, is not explained and is not linked. How the author set it up: [docs/REP
 
 ## Layout
 
-`src/` library sources · `tools/` expected-bytes generator, Hermes bytecode tool · `install/` launcher, installer,
+`src/` library sources · `tools/` expected-bytes generator · `install/` launcher, installer,
 rollback · `bench/` benchmark harness · `safemode/` KUAL extension · `docs/` methodology, results, images ·
 `build.sh` Docker build.
 

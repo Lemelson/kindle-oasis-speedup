@@ -12,6 +12,8 @@ still be a cache hit), "fwd again" = revisit forward, "back" = revisit backward.
 5.18.2 file: it carried an unrelated modification (about 36 KB of data, outside every code region this project checks
 or patches; those regions are identical to stock, see `EXPECTED-HASHES.txt`, which lists the stock file).
 
+![Before and after](img/before-after.svg)
+
 ## Library page turn, step by step
 
 ![timeline](img/page-turn-timeline.svg)
@@ -33,6 +35,13 @@ Steady state with the item cache (final configuration): settle 263–276 ms, als
 reboot (276/264/260 ms), because the mirrored caches already hold the pages; from the moment the key was delivered:
 ≈200–212 ms (X: 342–361 ms).
 VmRSS after 3 turns: 68.8–75.7 MB in every configuration, no trend by configuration.
+
+![Amazon's caches](img/caches.svg)
+
+Amazon's cover-tile cache (`/mnt/kfxcache/kpp`) is capped at 2 MB on this device (≈56 tiles ≈ 6 Library pages; 16 MB
+holds ≈410 tiles). The whole-item cache (`/mnt/kfxcache/kppbook`, the finished grid item) gets 35 MB only when the
+device reports more than 512 MB of RAM; this Oasis reports 482 MB and gets 1 MB (2–3 pages). `libkppcc` raises both
+limits to 16 MB and mirrors finished files to `/var/local/kppfast/covercache` (item cache in `book/`).
 
 ## Where the time goes
 
@@ -62,10 +71,11 @@ main thread 6–7 ticks (60–70 ms) instead of 18–19.
 - Result (first version of `libkppgrip`): release delivered in every run (3/3 with the stock 1000 ms hold, 6/6 full
   gestures with 700 ms); page turn 935–1068 ms after reaching the corner with 700 ms; selection bar 369–569 ms after
   lifting. Library A/B with both: neutral.
-- **The `libkppgrip` source in this repository is a later, hardened rewrite (reader-window gate, crash-safe restore,
-  no polling).** It passed its 41 unit checks but failed its first device test: the release arrived, yet there was no
-  page turn and no selection bar in the first two full gestures, so the device went back to the first version. Treat
-  `KPPGRIP=1` with this source as experimental and untested on a device.
+- **These results were measured with the first version, which is `src/kppgrip/kppgrip.c`.** The later, hardened
+  rewrite (`src/kppgrip/kppgrip-v2-experimental.c`: reader-window gate, crash-safe restore, no polling) passed its 41
+  unit checks but failed its first device test: the release arrived, yet there was no page turn and no selection bar
+  in the first two full gestures, so the device went back to the first version. Treat the v2 source as experimental
+  and untested on a device.
 
 ## Parity
 
@@ -101,6 +111,8 @@ main thread 6–7 ticks (60–70 ms) instead of 18–19.
 | wake from sleep: one full refresh instead of two | not done; ~0.45 s faster but may leave ghosting of the screensaver cover |
 
 ### Measured but unchanged
+
+![Measured and left as stock](img/unchanged.svg)
 
 | scenario | median | notes |
 |---|---|---|
