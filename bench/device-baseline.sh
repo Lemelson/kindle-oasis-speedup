@@ -1,9 +1,10 @@
 #!/bin/sh
 # Mac side: put the Kindle back to the accepted kppfast configuration (no restart unless --restart).
-# Baseline 19.11.2026 01:25 CET:
+# Baseline 19.11.2026 04:10 CET (the configuration measured in docs/RESULTS.md):
 #   fs, x11, malloc, img                      first accelerators (kpp2/kpp3)
 #   hot-v4   5 exact hot patches (as v3) + KPPHOT_RSEL_EDGE=700: selection page turn at the edge after 0.7 s (reader)
-#   side     weblab records not sent, isColorEnabled asked once
+#   side     weblab (A/B-experiment) exposure records not passed on, isColorEnabled asked once; drop
+#            KPPSIDE_WEBLAB=1 below if you do not want to change what the device reports
 #   db       prepared-statement reuse
 #   log      ONE switch for KPPMainApp log spam: `touch /var/local/kppfast/verbose-logs` = every line as stock,
 #            `rm` = quiet again (no restart needed)
@@ -11,7 +12,8 @@
 #            /var/local/kppfast/covercache) - approved by the device owner 19.11.2026 (cached tiles are Amazon's own 4-bit variant)
 #            + KPPCC_BOOK_MB=16 / KPPCC_BOOK=1 (19.11 03:45): Amazon's whole-item tile cache /mnt/kfxcache/kppbook
 #            16 MB instead of 1 MB and mirrored to covercache/book - approved by the device owner 19.11.2026
-#   grip     text selection: finger lift at the screen edge is no longer lost (reader)
+#   grip     text selection: finger lift at the screen edge is no longer lost (reader). Measured with the first
+#            version of libkppgrip; the source in src/kppgrip is a rewrite that failed its first device test
 # Previous baselines: device-baseline-20261119b.sh (without the item cache), device-baseline-20261119a.sh (without cc/grip/v4), device-baseline-20261118.sh (fs,x11,malloc,img).
 H=${KINDLE:-kindle}; D=/var/local/kppfast
 ssh $H "printf '$D/lib/libkppfs.so\n$D/lib/libkppx11.so\n$D/lib/libkppmalloc.so\n$D/lib/libkppimg.so\n$D/lib/libkpphot.so\n$D/lib/libkppside.so\n$D/lib/libkppdb.so\n$D/lib/libkpplog.so\n$D/lib/libkppcc.so\n$D/lib/libkppgrip.so\n' > $D/preload.list.new

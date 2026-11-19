@@ -11,7 +11,7 @@ KF_STOCK_COPY=$KF_DIR/kppmainapp.conf.stock
 CONF_STOCK_SHA256=ecf2f590e9f6222bb87f6697816c43c482967751aaa841ba2e42cdabe4b8625d
 CONF_KF_SHA256=5f926c6ccfa3839cee372cf91c0109642b6908ffb3c72fe7d458dadba45a1f05
 EXPECTED_FIRMWARE_BUILD="025-juno_1802_stinger_zelda-443455"
-V32_GUARD_STATE=/var/local/nativepatch-v32/guard.state
+V32_GUARD_STATE=/var/local/nativepatch-v32/guard.state   # author's separate reader patch; absent elsewhere (check passes)
 KPP_CRASH_COUNTER=/tmp/kppmainapp_crash_counter.txt
 TS="${TS:-$(date +%Y%m%d-%H%M%S)}"
 

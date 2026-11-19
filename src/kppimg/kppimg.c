@@ -4,7 +4,7 @@
  * It is an exported symbol called through the PLT (R_ARM_JUMP_SLOT in libImageUtils itself; imported by
  * libReactNative and libKindleNDKImageProcessingShared), so LD_PRELOAD replaces it for all callers.
  *
- * Stock semantics (disassembly 0xa6d0..0xa77a), reproduced exactly:
+ * Observable behaviour of the stock function (0xa6d0..0xa77a), which this re-implementation keeps:
  *   dst.fmt = 1; dst.w = src.w; dst.h = src.h; dst.stride = (3*w + align-1) & -align;
  *   p = malloc(h * stride); dst.buf = unique_ptr<uchar, void(*)(void*)>(p, free)   (old buffer released by its deleter)
  *   if (!p) return false;

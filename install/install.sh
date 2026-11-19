@@ -9,7 +9,7 @@
 #                                  kppmainapp.conf.stock (verified copy of the stock job for rollback)
 #   /etc/upstart/kppmainapp.conf   ONE line added before "exec /app/bin/KPPMainApp" (see kppfast-lib.sh KF_LINE);
 #                                  the only rootfs write (~200 bytes; mntroot rw -> staged copy + rename -> mntroot ro)
-# Not touched: /app/bin/KPPMainAppV2 (the v32 guard's hash check stays valid), /opt/amazon/ebook/lib, cc.db.
+# Not touched: /app/bin/KPPMainAppV2, /opt/amazon/ebook/lib, cc.db.
 # Backups: /mnt/us/kppfast-logs/backups/kppmainapp.conf.before-kppfast.<TS>. Log: .../kppfast.log
 # The new launch takes effect at the next KPPMainApp start (reboot, or kppfast-ctl.sh restart).
 P="$(cd "${1:-$(dirname "$0")}" && pwd)" || exit 1
@@ -20,6 +20,7 @@ mkdir -p "$NRR" "$KF_BACKUPS" 2>/dev/null
 kf_log "=== install from $P"
 [ "$(id -u)" = 0 ] || kf_fail "must run as root"
 firmware_ok || kf_fail "firmware is not $EXPECTED_FIRMWARE_BUILD"
+# only on the author's device: a separate reader patch has a boot guard; wait until it has finished
 v32_guard_armed && kf_fail "the v32 boot guard is still armed ($(cat $V32_GUARD_STATE)); install after it says 'ok'"
 # 1. payload integrity (SHA-256 pinned in SHA256SUMS)
 [ -f "$P/SHA256SUMS" ] || kf_fail "missing $P/SHA256SUMS"

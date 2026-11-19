@@ -1,17 +1,19 @@
-# Reproducing on your own Kindle
-
+# How the results were reproduced
 
 > **Disclaimer.** Educational and research documentation of the author's personal experiments on their own device.
-> This is not an encouragement or an instruction to modify devices. Modifying a Kindle may violate Amazon's terms of
-> use, voids the warranty and can brick the device. No support is provided. You act entirely at your own risk. The
-> project does not circumvent DRM or access protected content and must not be used to do so. Respect Amazon's
-> copyrights and trademarks. Not affiliated with or endorsed by Amazon.
+> This page records how the author built, installed and measured the code, for transparency. It is not a
+> recommendation to modify any device. Modifying a Kindle may violate Amazon's terms of use, may void the warranty and
+> can make the device unusable ("brick" it). No support is provided. Anything you do with it is entirely at your own
+> risk. The project does not circumvent DRM or access protected content and must not be used to do so. Respect
+> Amazon's copyrights and trademarks. Not affiliated with or endorsed by Amazon.
 
 ### Responsible use
 
 - Only on a device you own. Only Kindle Oasis 3 on firmware 5.18.2: everything else is refused by the checks or untested.
 - Never redistribute Amazon files: not the device libraries you link against, not the generated `hot_bytes.h`,
-  not symbol dumps, not screenshots of your books. `.gitignore` excludes them; keep it that way in forks.
+  not a `libkpphot.so` you built (it embeds those firmware bytes), not symbol dumps, not screenshots of your books.
+  `.gitignore` excludes them; keep it that way in forks. The other built libraries contain no firmware bytes, but
+  sharing binaries is not needed: everyone builds from source.
 - Do not use any of this to get at book content or to remove copy protection. Nothing here does that.
 - Keep a way back before you start (kill switch, KUAL safe mode, `rollback.sh`), and test one switch at a time.
 
@@ -37,8 +39,10 @@ For `libkpphot` you also need the binaries it patches (names in `tools/genbytes.
     python3 -I tools/genbytes.py --hash ~/kindle-private/syms > my-hashes.txt
     diff my-hashes.txt docs/EXPECTED-HASHES.txt && echo "identical binaries"
 
-This is the hash-only variant: it writes no firmware bytes. If anything differs, stop: the offsets in this project
-do not apply to your binaries, and the runtime checks would refuse every patch anyway.
+This is the hash-only variant: it writes no firmware bytes. `EXPECTED-HASHES.txt` lists the stock 5.18.2 files. If
+anything differs, stop: the offsets in this project do not apply to your binaries, and the runtime checks would refuse
+every patch anyway. (On the author's device `KPPMainAppV2` itself had a different sha256 because of an unrelated
+modification outside all checked regions; its region hashes were identical.)
 
 ### 3. Build
 
@@ -63,11 +67,19 @@ check with `readelf -V` that no `GLIBC_` version above 2.20 is referenced.
 
 ### 5. Enable switches one at a time
 
-    ssh kindle 'sh /var/local/kppfast/kppfast-ctl.sh set KPPFS_STAT=1'      # then: kppfast-ctl.sh restart
+    KINDLE=kindle sh bench/device-addlib.sh out/libkppmalloc.so                # copy + register its sha256
+    ssh kindle 'sh /var/local/kppfast/kppfast-ctl.sh all --no-restart'          # preload every library in lib/
+    ssh kindle 'sh /var/local/kppfast/kppfast-ctl.sh set KPPMALLOC=1'           # set the switch and restart
 
-Order that worked here: fs + x11 → malloc + img → hot (each `KPPHOT_*` separately) → side → db → log → cc
-(`KPPCC=1`, then `KPPCC_CAP_MB=16`, then `KPPCC_BOOK_MB=16 KPPCC_BOOK=1`) → grip. Add a library to the device with
-`bench/device-addlib.sh out/libX.so`. `bench/device-baseline.sh` shows the full final configuration.
+`install/env.default` already sets the `libkppfs`/`libkppx11` switches. Order that worked here: fs + x11 → malloc +
+img → hot (each `KPPHOT_*` separately) → side → db → log → cc (`KPPCC=1`, then `KPPCC_CAP_MB=16`, then
+`KPPCC_BOOK_MB=16 KPPCC_BOOK=1`) → grip. `bench/device-baseline.sh` writes the full measured configuration to the
+device (read it first; it expects all ten libraries and the bench helpers in `/var/local/kpp2`).
+
+Two notes on that configuration: `KPPSIDE_WEBLAB=1` stops the app's A/B-experiment ("weblab") exposure records from
+being passed on (see the README, "Amazon services and telemetry"); leave it off if you do not want to change what
+the device reports. `KPPGRIP=1` was measured with an earlier version of `libkppgrip`; the source here failed its first
+device test (see RESULTS).
 
 ### 6. Measure (A/B)
 

@@ -1,5 +1,6 @@
 /* lz4test DIR [MUTATIONS]: kpp_lz4_safe vs libReactNative's own LZ4_decompress_safe (0x1e6524) on cover-cache files
- * and on random corruptions of them. Run in kindle-emu-rootfs (see lz4test.sh). */
+ * and on random corruptions of them. Needs the firmware's own libReactNative.so (an image of your own device's rootfs);
+ * not run by ../../build.sh test. */
 #define _GNU_SOURCE
 #include <dirent.h>
 #include <dlfcn.h>

@@ -95,7 +95,7 @@ static int good_name(const char *n) {
 }
 
 /* ---- validation (kpp6): a file is accepted only if it is a complete, structurally sound cache file ----
- * CacheHeader (0x30 bytes, kpp3/NOTES.md): +0 u16 w, +2 u16 h, +4 u16 stride, +8 u32 LZ4 size, +0xc invert flag,
+ * CacheHeader (0x30 bytes): +0 u16 w, +2 u16 h, +4 u16 stride, +8 u32 LZ4 size, +0xc invert flag,
  * +0x10 rectangle; then one LZ4 block of the 4-bit packed image, ((w+1)/2)*h bytes raw (what the app's reader passes
  * as the output capacity and requires as the result). Checked: size == 48 + LZ4 size, w/h/stride plausible, and the
  * LZ4 block parses sequence by sequence (lengths inside the block, offsets non-zero and inside the output produced
@@ -282,7 +282,7 @@ static void initial_sync(void) {
 #define RN_SIZE 3260312
 #define CAP_SITE 0x1aaed8
 /* Expected code bytes are checked by FNV-1a-64 hash only (the public source ships no firmware bytes). The hash is
- * computed over the exact bytes of the stock 5.18.2 binary; together with the file-size check any other build
+ * computed over the exact bytes of the stock 5.18.2 binaries; together with the file-size check any other build
  * makes the comparison fail and the patch is skipped. tools/genbytes.py --hash prints these values for your device. */
 static unsigned long long kpp_fnv64(const unsigned char *p, unsigned n) {
     unsigned long long h = 0xcbf29ce484222325ULL;
@@ -313,7 +313,7 @@ static int cap_cb(struct dl_phdr_info *i, size_t sz, void *d) {
 
 /* ---- KPPCC_LZ4=1: libReactNative's static LZ4_decompress_safe (0x1e6524, Thumb, used only for the cover cache:
  * callers 0x1a948c / 0x1a95a8 accept the result only when it equals the expected size) -> kpp_lz4_safe (kpplz4.h).
- * The entry (8 bytes) becomes `ldr.w pc, [pc]` + address. Differential test: src/lz4test.c. ---- */
+ * The entry (8 bytes) becomes `ldr.w pc, [pc]` + address. Differential test: src/kppcc/lz4test.c. ---- */
 #include "kpplz4.h"
 #define LZ_SITE 0x1e6524
 #define LZ_EXPECT_FNV 0xf9714a3202f592e6ULL /* FNV-1a-64 of the 8 expected code bytes */

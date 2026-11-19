@@ -7,7 +7,7 @@ import hashlib, os, sys
 
 # name, lib file, start, end (end exclusive)
 REGIONS = [
-    # KUX selection ( main executable KPPMainAppV2 v32 c685dd53; ET_EXEC, vaddr = file offset + 0x10000)
+    # KUX selection (main executable KPPMainAppV2 of FW 5.18.2; ET_EXEC, vaddr = file offset + 0x10000)
     ("kpp_edge", "KPPMainAppV2", 0xd91494, 0xd914c4),      # getInitialUnpopulatedLayoutSettings: mov.w r3,#1000; str [r1,#0x198]
     ("kpp_thr_fn", "KPPMainAppV2", 0xf5d890, 0xf5d8e4),    # SelectionManager notify throttle fn + literals (1e6, 300e6 ns)
     ("kpp_thr_rsb", "KPPMainAppV2", 0xf5fef0, 0xf5ff04),   # updateSelection deferred re-notify: rsbs r2,r2,#300
