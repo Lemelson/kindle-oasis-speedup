@@ -26,7 +26,7 @@ or patches; those regions are identical to stock, see `EXPECTED-HASHES.txt`, whi
 | + libkppmalloc + libkppimg | 0.59–0.65 s | old baseline B: 647/624/624, 649/593/624 ms |
 | + libkpphot (5 patches) + libkppside + libkppdb + libkpplog | ≈0.50 s | L: 508/494/471, 493/470/474, 503/469/460 ms |
 | + libkppcc: Amazon's cover cache 2 → 16 MB, kept across reboots | ≈0.41 s | X: 422/413/405, 421/413/404, 415/397/406 ms vs B 737/588/609, 635/600/594 |
-| + Amazon's whole-item cache 1 → 16 MB (`KPPCC_BOOK_MB=16`, mirrored) | 0.25–0.28 s on pages seen before, ≈0.42 s on a page's first ever visit | K: 409/269/258, 420/256/262, 415/254/254 ms vs X 426/408/408, 425/415/399; final config steady state 274/266/269, 268/263/276 ms |
+| + Amazon's whole-item cache 1 → 16 MB (`KPPCC_BOOK_MB=16`, mirrored) | 0.26–0.28 s on pages seen before, ≈0.42 s on a page's first ever visit | K: 409/269/258, 420/256/262, 415/254/254 ms vs X 426/408/408, 425/415/399; final config steady state 274/266/269, 268/263/276 ms |
 
 The first three rows come from earlier sessions whose raw runs are not reproduced here.
 Single candidates measured alone before combining: hot −22…−43 ms, side (with its own log drop) −40…−73 ms, db −26 ms;
