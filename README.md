@@ -100,7 +100,17 @@ reads, including reads of book files, and can enlarge their read buffer; it neve
 - `libkppio` (buffered reads) is built and unit-tested but was not measured on the device; not in the baseline.
 - The first ever visit of a page (~0.42 s) still decodes, scales and draws every cover and reads it back from X to
   fill the caches; pre-filling the caches was not attempted.
-- Book opening and reader page turns are not sped up (work in progress, nothing to claim yet).
+- Book opening: not sped up. A warm open of an already-opened book takes ~1.24 s (tap to page fully shown);
+  ~0.5 s of it is the Java reader (creating the book object, then notifying ~10 listeners) before KPPMainApp may
+  show the page, ~0.34 s is the e-ink refresh. Sending KPPMainApp's open request earlier saved only ~45 ms (−4 %),
+  because the page is still held back by the listeners; loading navigation data lazily gained nothing. Running the
+  non-display listeners after the page is shown (expected −10–12 %) was built but never validated. None of this is
+  shipped; it would require patching Amazon's Java code.
+- Reader page turns: ~0.115 s of software, then ~0.37 s of e-ink refresh; nothing left to gain without changing
+  the waveform (not done).
+- Wake from sleep (power button): page clean after ~1.0 s, settled at ~1.3 s; almost all of it is two full e-ink
+  refreshes (the second one removes ghosting of the screensaver cover). Dropping it would save ~0.45 s at the cost of
+  possible ghosting; not done. The kppfast libraries and the other additions add no measurable delay on wake.
 
 ## Install
 

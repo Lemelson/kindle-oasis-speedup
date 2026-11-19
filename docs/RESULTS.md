@@ -95,3 +95,18 @@ main thread 6–7 ticks (60–70 ms) instead of 18–19.
 | quick-settings timers (`libkppqs`, not in this repository) | second screen update on first open, rejected |
 | Java reader patch (selection timers, not in this repository) | not used on the device (KUX renders books), dead end |
 | `libkppio` (buffered reads) | built, 25/25 unit checks, not measured on the device |
+| book open: send KPPMainApp's open request before the Java listeners (Java patch, not in this repository) | 1240 → 1193 ms median warm open (−4 %), parity clean on one test book; not shipped |
+| book open: lazy navigation data (Java patch, not in this repository) | no gain (needed before the listeners anyway) |
+| book open: run non-display Java listeners after the page is shown | built, never validated on the device (expected −10–12 %) |
+| wake from sleep: one full refresh instead of two | not done; ~0.45 s faster but may leave ghosting of the screensaver cover |
+
+### Measured but unchanged
+
+| scenario | median | notes |
+|---|---|---|
+| book open, already opened before | ~1.24 s to page fully shown | ~0.5 s Java reader before the page may be shown; ~0.34 s e-ink |
+| book open, first ever after a boot | ~4.3–5.0 s | |
+| reader page turn | ~0.115 s to first screen write, ~0.48 s e-ink done | text and image-heavy books alike |
+| quick-settings panel | shown at ~0.88–0.92 s | window-manager timer + one full refresh |
+| wake from sleep (power button) | page clean ~1.0 s, settled ~1.3 s (p90 1.33 s) | two full refreshes + one partial |
+| sleep (power button) | ~3.1 s to screensaver shown | includes an 800 ms delay inside the screensaver program |
