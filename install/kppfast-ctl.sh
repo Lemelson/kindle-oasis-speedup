@@ -5,7 +5,8 @@
 #   fs        libkppfs.so only          x11   libkppx11.so only          all   every library in lib/
 #   enable    clear the fail-safe (fails=0, disabled, start history) and restart with the current lists
 #   restart   restart KPPMainApp (waits if Amazon's crash counter is >= 2, see kppfast-lib.sh)
-#   nftd on|off   /var/local/DISABLE_NATIVE_THREAD_FREEZE_DETECTION (config switch read by libReactNative)
+#   nftd on|off   creates/removes Amazon's own flag file /var/local/DISABLE_NATIVE_THREAD_FREEZE_DETECTION (read by
+#                 libReactNative); experiment only, not part of the measured configuration
 #   set KEY=VALUE / unset KEY   edit one line of env (KPP* keys only), e.g. set KPPFS_TTL_MS=500
 #   status    = check.sh
 D=/var/local/kppfast
@@ -26,7 +27,7 @@ case "$1" in
   set) case "$2" in KPP[A-Z0-9_]*=*) k=${2%%=*}; grep -v "^$k=" $D/env > $D/env.tmp 2>/dev/null; echo "$2" >> $D/env.tmp; mv -f $D/env.tmp $D/env ;; *) echo "set KPPxxx=value"; exit 2 ;; esac ;;
   unset) grep -v "^$2=" $D/env > $D/env.tmp 2>/dev/null; mv -f $D/env.tmp $D/env ;;
   status) exec sh $D/check.sh ;;
-  *) sed -n '2,12p' "$0"; exit 2 ;;
+  *) sed -n '2,13p' "$0"; exit 2 ;;
 esac
 reset_failsafe
 kf_log "mode $*: preload.list [$(tr '\n' ' ' < $D/preload.list)] env [$(grep -v '^#' $D/env | tr '\n' ' ')] nftd=$( [ -e /var/local/DISABLE_NATIVE_THREAD_FREEZE_DETECTION ] && echo on || echo off)"

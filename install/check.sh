@@ -1,7 +1,6 @@
 #!/bin/sh
 # kppfast check: is it installed, intact, and is the running KPPMainApp preloaded and healthy?
 # Exit 0 = installed + healthy (preloaded, or stock on purpose with a stated reason), 1 = problem.
-# Kindle Sync runs this after the reboot (4 min uptime) and reports the output.
 HERE="$(cd "$(dirname "$0")" && pwd)"
 KF_ROLE=check
 . /var/local/kppfast/kppfast-lib.sh 2>/dev/null || . "$HERE/kppfast-lib.sh" || { echo "kppfast-lib.sh not found"; exit 1; }

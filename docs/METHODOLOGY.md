@@ -9,6 +9,8 @@
   patch site).
 - Never write Amazon's databases or configs (`/var/local/cc.db`), never modify `/usr`, `/opt/amazon`, `/app`; the only
   rootfs change is one line in `/etc/upstart/kppmainapp.conf`, done by `install/install.sh` with sha256 checks.
+  (One optional experiment, `kppfast-ctl.sh nftd on`, creates a flag file the firmware itself reads; it is not part of
+  the measured configuration.)
 - Never put extra files into `/opt/amazon/ebook/lib` (the framework loads every file there).
 
 ## Finding the cost
